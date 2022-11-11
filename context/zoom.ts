@@ -1,5 +1,5 @@
-import React from "react"
-import { MediaStream, ZoomClient } from "../types/zoom"
+import React, { createContext } from "react"
+import { TStream, TVideoClient } from "../types/zoom"
 
 interface MediaContext {
   audio: {
@@ -10,11 +10,7 @@ interface MediaContext {
     encode: boolean
     decode: boolean
   }
-  share: {
-    encode: boolean
-    decode: boolean
-  }
-  mediaStream: MediaStream | null
+  mediaStream: TStream | null
 }
-export const MediaContext = React.createContext<MediaContext>(null as any)
-export const ZoomContext = React.createContext<ZoomClient>(null as any)
+export const MediaContext = createContext<MediaContext | null>(null as any)
+export const ZoomContext = createContext<TVideoClient | null>(null as any)
