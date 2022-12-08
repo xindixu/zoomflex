@@ -81,12 +81,7 @@ useEffect(()=>{
   </div>
 </div>
 
-<div class="row go-back">
-  <a href="javascript:history.back()" class="edit">
-    <span class="material-icons-round icon-center">chevron_left</span>
-    Go Back
-  </a>
-</div>
+
 
 <VideoForm addVideoP ={addVideo}/>
       {
@@ -105,15 +100,14 @@ useEffect(()=>{
        view
       </button>
   
-        <a href="/view/{{video.id}}" class="view" id="view">
-                <span class="material-icons-round icon-center">edit</span>
-                view Movie Info
+       <a href="/view/{{video.id}}" class="view" id="view">
+                <span class="material-icons-round icon-center"></span>
+                {video.title}  
             </a>
         
                   <img src={video.images}/>
                   <img src={getposturl(video.poster_path)}/>
-                  {video.title}  
-                {video.id}
+                
                 <td> <a href={'/video/'+video.id}>Edit</a></td>
                
                   </div>
