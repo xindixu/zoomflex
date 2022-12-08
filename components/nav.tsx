@@ -7,6 +7,7 @@ const ROUTES = {
   home: "/",
   meetings: "/meetings",
   rooms: "/rooms",
+  videos:"/videos",
   signIn: "/sign-in",
   signOut: "/sign-out",
 }
@@ -15,6 +16,7 @@ const DEFAULT_ITEMS = [
   { key: "home", label: "Home" },
   { key: "meetings", label: "Meetings" },
   { key: "rooms", label: "Rooms" },
+  { key: "videos", label: "Videos" },
 ]
 
 const Nav = () => {

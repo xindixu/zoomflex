@@ -1,8 +1,10 @@
 import type { NextPage } from "next"
+import { useRouter } from "next/router"
 import { useEffect, useState } from 'react';
 import {VideoForm} from '../lib/videoform';
 
-function Videos() {
+const Videos: NextPage = () => {
+  const router = useRouter()
   const API_KEY = `5075aeb0c224063fdb615c496b26ba4a`
   const VideosList = ({item, deleteVideoProp}) =>{
 
@@ -56,13 +58,11 @@ useEffect(()=>{
         <ul class="navbar-nav mr-auto">
           <li class="nav-item">
             <a href="/" class="nav-link" data-toggle="modal" data-target="#">
-              <span class="material-icons-round vcenter">home</span>
               <span class="d-none d-sm-inline d-xl-block px-1">Home</span>
             </a>
           </li>
           <li class="nav-item">
             <a href="/add_videos" class="nav-link" data-toggle="modal" data-target="#">
-              <span class="material-icons-round vcenter">add_circle</span>
               <span class="d-none d-sm-inline d-xl-block px-1">Add Movie</span>
             </a>
           </li>
