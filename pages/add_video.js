@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import Videos from 'videos';
 
-import {VideoForm} from './forms/videoform';
+import {VideoForm} from './lib/videoform';
 
 import Axios from 'axios';
 function Add_videos() {
