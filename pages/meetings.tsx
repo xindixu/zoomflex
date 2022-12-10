@@ -17,17 +17,18 @@ const Video = dynamic(() => import("../components/video"), { ssr: false })
 
 const Meetings = () => {
   const { currentUser } = useContext(AuthContext)
-  const { query } = useRouter()
-  const [step, setStep] = useState(2)
-  const [videoId, setVideoId] = useState(1)
-  const [roomId, setRoomId] = useState(1)
+  const router = useRouter()
+  const { query } = router
+  const [step, setStep] = useState(0)
+  const [videoId, setVideoId] = useState()
+  const [roomId, setRoomId] = useState()
 
   const content = [
     <VideoForm
       onSubmit={(values) => {
         console.log(values)
-        createVideo(values).then(() => {
-          setVideoId(1)
+        createVideo(values).then(({ id }) => {
+          setVideoId(id)
           setStep(1)
         })
       }}
@@ -35,17 +36,20 @@ const Meetings = () => {
     <RoomForm
       onSubmit={(values) => {
         console.log(values)
-        createRoom({ ...values, videoId, hostId: currentUser?.id }).then(() => {
-          setStep(2)
-          setRoomId(1)
-        })
+        createRoom({ ...values, videoId, hostId: currentUser?.id }).then(
+          ({ id }) => {
+            setStep(2)
+            setRoomId(id)
+          }
+        )
       }}
     />,
     <UserForm
       onSubmit={(values) => {
         console.log(values)
         addParticipants({ ...values, roomId }).then(() => {
-          setStep(0)
+          console.log("done!")
+          router.push(`/meetings?roomId=${roomId}`)
         })
       }}
     />,

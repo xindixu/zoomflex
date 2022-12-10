@@ -5,12 +5,10 @@ export function createVideo({ name, url }) {
     method: "post",
     data: {
       name,
-      url,
+      video_url: url,
     },
     url: "/video/videos",
-  }).then((resp) => {
-    console.log(resp.data)
-  })
+  }).then((resp) => resp.data.data)
 }
 
 export function createRoom({ name, videoId, hostId }) {
@@ -22,9 +20,7 @@ export function createRoom({ name, videoId, hostId }) {
       host_id: hostId,
     },
     url: "/room/room",
-  }).then((resp) => {
-    console.log(resp.data)
-  })
+  }).then((resp) => resp.data.data)
 }
 
 export function addParticipants({ roomId, participants }) {
