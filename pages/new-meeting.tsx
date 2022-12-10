@@ -1,13 +1,13 @@
 import React, { useContext, useState } from "react"
 import { Steps, Typography } from "antd"
 
-import AuthContext from "../../context/auth"
+import AuthContext from "../context/auth"
 import { useRouter } from "next/router"
-import withProtectedRoute from "../../components/protected-routes"
-import VideoForm from "../../components/video/form"
-import RoomForm from "../../components/room/form"
-import UserForm from "../../components/users/form"
-import { createVideo, createRoom, addParticipants } from "../../lib/api"
+import withProtectedRoute from "../components/protected-routes"
+import VideoForm from "../components/video/form"
+import RoomForm from "../components/room/form"
+import UserForm from "../components/users/form"
+import { createVideo, createRoom, addParticipants } from "../lib/api"
 
 const { Title } = Typography
 

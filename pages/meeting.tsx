@@ -2,16 +2,14 @@ import React, { useContext, useEffect, useState } from "react"
 import dynamic from "next/dynamic"
 import { Button, Typography } from "antd"
 
-import AuthContext from "../../context/auth"
+import AuthContext from "../context/auth"
 import { useRouter } from "next/router"
-import withProtectedRoute from "../../components/protected-routes"
+import withProtectedRoute from "../components/protected-routes"
 import NextLink from "next/link"
-import { getRoom, getVideo, getVideoUrlByRoomId } from "../../lib/api"
+import { getRoom, getVideo, getVideoUrlByRoomId } from "../lib/api"
 
-const { Link } = Typography
-
-const Call = dynamic(() => import("../../components/call"), { ssr: false })
-const Video = dynamic(() => import("../../components/video"), { ssr: false })
+const Call = dynamic(() => import("../components/call"), { ssr: false })
+const Video = dynamic(() => import("../components/video"), { ssr: false })
 
 const Meeting = () => {
   const { currentUser } = useContext(AuthContext)

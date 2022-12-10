@@ -6,7 +6,6 @@ import AuthContext from "../context/auth"
 
 function SignIn() {
   const router = useRouter()
-  // @ts-ignore
   const { currentUser, setCurrentUser } = useContext(AuthContext)
 
   useEffect(() => {
@@ -25,8 +24,8 @@ function SignIn() {
   }, [])
 
   const onSuccess = async (res) => {
-    setCurrentUser(res)
     localStorage.setItem("user", JSON.stringify(res))
+    setCurrentUser(res)
     router.push(
       {
         pathname: "/",

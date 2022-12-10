@@ -16,8 +16,8 @@ function App({ Component, pageProps }: AppProps) {
   const { hint, type } = router.query
 
   useEffect(() => {
-    if (hint && type) {
-      message[type](hint)
+    if (hint && type && typeof type === "string") {
+      message?.[type](hint)
     }
   }, [hint, type, router.pathname])
 

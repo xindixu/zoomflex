@@ -10,12 +10,15 @@ const GOOGLE_LOGIN_BUTTON_ID = "google-login-button"
 
 const Google = ({}: Props) => {
   useLayoutEffect(() => {
-    // @ts-ignore
-
-    window?.google.accounts.id.renderButton(
-      document.getElementById(GOOGLE_LOGIN_BUTTON_ID),
-      { theme: "outline", size: "large" }
-    )
+    try {
+      // @ts-ignore
+      window?.google.accounts.id.renderButton(
+        document.getElementById(GOOGLE_LOGIN_BUTTON_ID),
+        { theme: "outline", size: "large" }
+      )
+    } catch (error) {
+      console.error(error)
+    }
   }, [])
 
   return <div id={GOOGLE_LOGIN_BUTTON_ID}></div>

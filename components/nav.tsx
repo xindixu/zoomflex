@@ -5,7 +5,7 @@ import AuthContext from "../context/auth"
 
 const ROUTES = {
   home: "/",
-  meetings: "/meetings/new",
+  meetings: "/new-meeting",
   rooms: "/rooms",
   videos: "/videos",
   signIn: "/sign-in",
@@ -25,7 +25,7 @@ const Nav = () => {
   const sessionITem = currentUser?.username
     ? {
         key: "subMenu",
-        label: currentUser.username,
+        label: currentUser?.username,
         children: [{ key: "signOut", label: "Sign Out" }],
       }
     : { key: "signIn", label: "Sign In" }

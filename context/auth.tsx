@@ -25,47 +25,52 @@ export const AuthContextProvider = ({ children }) => {
   const router = useRouter()
 
   useEffect(() => {
-    // @ts-ignore
-    window?.google.accounts.id.initialize({
-      client_id: CLIENT_ID,
-      callback: (res) => {
-        if (!res.credential) {
-          return
-        }
-        const { credential } = res
-        console.log(credential)
-        const payload = jose.decodeJwt(credential)
-        const { email, name } = payload
-        console.log(payload)
-        setCurrentUser({
-          username: name,
-          email,
-        } as TUser)
-        router.push(
-          {
-            pathname: "/",
-            query: {
-              hint: `Welcome back, ${name}`,
-              type: "success",
+    try {
+      // @ts-ignore
+      window?.google.accounts.id.initialize({
+        client_id: CLIENT_ID,
+        callback: (res) => {
+          if (!res.credential) {
+            return
+          }
+          const { credential } = res
+          console.log(credential)
+          const payload = jose.decodeJwt(credential)
+          const { email, name } = payload
+          console.log(payload)
+          setCurrentUser({
+            username: name,
+            email,
+          } as TUser)
+          router.push(
+            {
+              pathname: "/",
+              query: {
+                hint: `Welcome back, ${name}`,
+                type: "success",
+              },
             },
-          },
-          "/"
-        )
-      },
-    })
-    // google.accounts.id.prompt()
+            "/"
+          )
+        },
+      })
+    } catch (error) {
+      console.error(error)
+    }
   }, [])
 
   useEffect(() => {
     try {
       const user = JSON.parse(localStorage.getItem("user") || "") || {}
-      setCurrentUser({
-        username: user.username,
-        email: user.email,
-        id: user.id,
-      })
+      if (user) {
+        setCurrentUser({
+          username: user.username,
+          email: user.email,
+          id: user.id,
+        })
+      }
     } catch (e) {
-      console.error(e)
+      console.error("Failed to parse user from local storage", e)
     }
     setLoaded(true)
   }, [])
@@ -75,9 +80,7 @@ export const AuthContextProvider = ({ children }) => {
       value={{
         loaded,
         currentUser,
-        setCurrentUser: (res) => {
-          setCurrentUser(res)
-        },
+        setCurrentUser,
       }}
     >
       {children}

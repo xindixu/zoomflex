@@ -13,4 +13,4 @@ const Rooms: NextPage = () => {
   )
 }
 
-export default withProtectedRoute(Rooms)
+export default Rooms
