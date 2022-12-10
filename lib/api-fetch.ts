@@ -1,9 +1,9 @@
 import axios from "axios"
 
-// export const API_ENDPOINT =
-//   "https://teprwsutv4.execute-api.us-east-1.amazonaws.com/prod/"
+export const API_ENDPOINT =
+  "https://et3r5itt50.execute-api.us-east-1.amazonaws.com/prod/"
 
-export const API_ENDPOINT = "http://127.0.0.1:5000"
+// export const API_ENDPOINT = "http://127.0.0.1:5000"
 
 // TODO: use this function to fetch data from the api
 export const apiFetch = ({
@@ -13,7 +13,7 @@ export const apiFetch = ({
 }: {
   url: string
   method: "get" | "post" | "delete" | "put"
-  data: any
+  data?: any
 }) =>
   axios.request({
     method,

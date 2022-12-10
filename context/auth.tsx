@@ -4,6 +4,7 @@ import * as jose from "jose"
 import { CLIENT_ID } from "../lib/auth"
 
 type TUser = {
+  id: number
   email: string
   username: string
 }
@@ -14,16 +15,24 @@ type TAuthContext = {
 }
 
 const AuthContext = React.createContext<TAuthContext>({
+  currentUser: {
+    id: 1,
+    username: "xindi",
+    email: "xindixu@gmail.com",
+  },
   setCurrentUser: () => {},
 })
 
 export const AuthContextProvider = ({ children }) => {
-  const [currentUser, setCurrentUser] = useState<TUser>()
+  const [currentUser, setCurrentUser] = useState<TUser>({
+    id: 1,
+    username: "xindi",
+    email: "xindixu@gmail.com",
+  })
   const router = useRouter()
 
   useEffect(() => {
     // @ts-ignore
-
     window?.google.accounts.id.initialize({
       client_id: CLIENT_ID,
       callback: (res) => {

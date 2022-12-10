@@ -69,7 +69,7 @@ function Session({ type, initialEmail = "", onSuccess }: TProps) {
       setIsSubmitting(true)
       // @ts-ignore
       const { user } = await ACTIONS[type](values)
-
+      console.log(user)
       onSuccess(user)
     } catch (err) {
       // @ts-ignore

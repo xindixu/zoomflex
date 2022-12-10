@@ -1,15 +1,15 @@
 import React, { useEffect } from "react"
 import { Form, Input, Button, Space } from "antd"
-import { MinusCircleOutlined, PlusOutlined } from "@ant-design/icons"
 
 type TProps = {
   onSubmit: (value: any) => void
   initialValues?: {
     name: string
+    url: string
   }
 }
 
-const RoomForm = ({ initialValues, onSubmit }: TProps) => {
+const VideoForm = ({ initialValues, onSubmit }: TProps) => {
   const [form] = Form.useForm()
 
   const onFinish = (values) => {
@@ -24,7 +24,7 @@ const RoomForm = ({ initialValues, onSubmit }: TProps) => {
 
   return (
     <Form
-      name="room"
+      name="video"
       labelCol={{ span: 4 }}
       wrapperCol={{ span: 16 }}
       initialValues={initialValues}
@@ -32,10 +32,16 @@ const RoomForm = ({ initialValues, onSubmit }: TProps) => {
       onFinishFailed={onFinishFailed}
       form={form}
     >
-      <Form.Item label="Room Name" name="name" rules={[{ required: true }]}>
+      <Form.Item label="Name" name="name" rules={[{ required: true }]}>
         <Input />
       </Form.Item>
-
+      <Form.Item
+        label="URL"
+        name="url"
+        rules={[{ required: true }, { type: "url" }]}
+      >
+        <Input />
+      </Form.Item>
       <Form.Item
         wrapperCol={{
           offset: 4,
@@ -43,11 +49,11 @@ const RoomForm = ({ initialValues, onSubmit }: TProps) => {
         }}
       >
         <Button type="primary" htmlType="submit">
-          Create Room
+          Create Video
         </Button>
       </Form.Item>
     </Form>
   )
 }
 
-export default RoomForm
+export default VideoForm

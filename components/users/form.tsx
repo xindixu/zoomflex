@@ -1,16 +1,19 @@
-import React, { useEffect } from "react"
-import { Form, Input, Button, Space } from "antd"
+import React, { useEffect, useState } from "react"
+import { Form, Input, Button, Space, Select } from "antd"
 import { MinusCircleOutlined, PlusOutlined } from "@ant-design/icons"
+import { listUsers } from "../../lib/api"
+import { TUser } from "../../types/user"
 
 type TProps = {
   onSubmit: (value: any) => void
   initialValues?: {
-    name: string
+    participants: number[]
   }
 }
 
-const RoomForm = ({ initialValues, onSubmit }: TProps) => {
+const UserForm = ({ initialValues, onSubmit }: TProps) => {
   const [form] = Form.useForm()
+  const [users, setUsers] = useState<TUser[]>([])
 
   const onFinish = (values) => {
     onSubmit(values)
@@ -19,6 +22,11 @@ const RoomForm = ({ initialValues, onSubmit }: TProps) => {
   const onFinishFailed = (errorInfo) => {
     console.error("Failed:", errorInfo)
   }
+  useEffect(() => {
+    listUsers().then((data) =>
+      setUsers(data.map((d) => ({ value: d.id, label: d.username })))
+    )
+  }, [])
 
   useEffect(() => form.resetFields(), [form, initialValues])
 
@@ -32,10 +40,14 @@ const RoomForm = ({ initialValues, onSubmit }: TProps) => {
       onFinishFailed={onFinishFailed}
       form={form}
     >
-      <Form.Item label="Room Name" name="name" rules={[{ required: true }]}>
-        <Input />
+      <Form.Item label="Participants" name="participants">
+        <Select
+          mode="multiple"
+          allowClear
+          style={{ width: "100%" }}
+          options={users}
+        />
       </Form.Item>
-
       <Form.Item
         wrapperCol={{
           offset: 4,
@@ -43,11 +55,11 @@ const RoomForm = ({ initialValues, onSubmit }: TProps) => {
         }}
       >
         <Button type="primary" htmlType="submit">
-          Create Room
+          Invite Participants
         </Button>
       </Form.Item>
     </Form>
   )
 }
 
-export default RoomForm
+export default UserForm

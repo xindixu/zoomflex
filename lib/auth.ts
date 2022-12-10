@@ -14,7 +14,11 @@ export function signUp({ email, username, password }) {
       password,
     },
     url: "/user/sign-up",
-  })
+  }).then(() => ({
+    user: {
+      username,
+    },
+  }))
 }
 
 export function signIn({ username, password }) {
@@ -25,7 +29,11 @@ export function signIn({ username, password }) {
       password,
     },
     url: "/user/sign-in",
-  })
+  }).then(() => ({
+    user: {
+      username,
+    },
+  }))
 }
 
 export async function signOut() {
