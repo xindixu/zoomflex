@@ -74,5 +74,4 @@ const Meetings = () => {
   )
 }
 
-export default Meetings
-// export default withProtectedRoute(Meetings)
+export default withProtectedRoute(Meetings)

@@ -1,14 +1,14 @@
-import { useEffect, useContext } from "react"
+import { useLayoutEffect, useContext } from "react"
 import { useRouter } from "next/router"
 
 import AuthContext from "../context/auth"
 
 const useProtectedRoute = () => {
-  const { currentUser } = useContext(AuthContext)
+  const { currentUser, loaded } = useContext(AuthContext)
   const router = useRouter()
 
-  useEffect(() => {
-    if (!currentUser) {
+  useLayoutEffect(() => {
+    if (loaded && !currentUser) {
       router.push(
         {
           pathname: "/sign-in",
@@ -20,7 +20,7 @@ const useProtectedRoute = () => {
         "/sign-in"
       )
     }
-  }, [router, currentUser])
+  }, [router, loaded, currentUser])
 
   return !currentUser
 }

@@ -15,16 +15,14 @@ const START_WEBCAM = "START_WEBCAM"
 const START_CALL = "START_CALL"
 const JOINED_CALL = "JOINED_CALL"
 
-const Call = () => {
+const Call = ({ id, isHost }) => {
   const peerConnection = useRef(new RTCPeerConnection(servers))
   const localStream = useRef<MediaStream | null>(null)
   const remoteStream = useRef<MediaStream | null>(null)
   const localVideo = useRef<HTMLVideoElement>(null)
   const remoteVideo = useRef<HTMLVideoElement>(null)
 
-  const [callId, setCallId] = useState("")
   const [step, setStep] = useState(START_WEBCAM)
-  const [isHost, setIsHost] = useState(false)
 
   const setUpVideos = useCallback(async () => {
     localStream.current = await navigator.mediaDevices.getUserMedia({
@@ -58,12 +56,9 @@ const Call = () => {
   }, [])
 
   const createOffer = useCallback(async () => {
-    const callDoc = firestore.collection("calls").doc()
+    const callDoc = firestore.collection("calls").doc(id)
     const offerCandidates = callDoc.collection("offerCandidates")
     const answerCandidates = callDoc.collection("answerCandidates")
-
-    setCallId(callDoc.id)
-    setIsHost(true)
 
     // Get candidates for caller, save to db
     peerConnection.current.onicecandidate = (event) => {
@@ -106,11 +101,7 @@ const Call = () => {
   }, [])
 
   const answerCall = useCallback(async () => {
-    if (!callId) {
-      return
-    }
-
-    const callDoc = firestore.collection("calls").doc(callId)
+    const callDoc = firestore.collection("calls").doc(id)
     const offerCandidates = callDoc.collection("offerCandidates")
     const answerCandidates = callDoc.collection("answerCandidates")
 
@@ -150,13 +141,12 @@ const Call = () => {
     })
 
     setStep(JOINED_CALL)
-  }, [callId])
+  }, [id])
 
   return (
     <div>
       {step === START_WEBCAM && (
         <>
-          <p>Step 1:</p>
           <p>Start your webcam</p>
           <Button onClick={setUpVideos}>Turn on web cam</Button>
         </>
@@ -164,32 +154,12 @@ const Call = () => {
 
       {step === START_CALL && (
         <>
-          <p>Step 2:</p>
-          <p>Start a new call</p>
-          <Button onClick={createOffer}>Start a call</Button>
-          {isHost || (
-            <>
-              <p>Or join an existing call</p>
-              <Input
-                type="text"
-                value={callId}
-                onChange={(e) => setCallId(e.target.value)}
-              />
-              <Button onClick={answerCall} disabled={!callId}>
-                Join the call
-              </Button>
-            </>
-          )}
-        </>
-      )}
-
-      {step === JOINED_CALL && (
-        <>
-          <p>Step 3:</p>
-          {isHost && !!callId ? (
-            <p>Please share this call ID: {callId} </p>
+          {isHost ? (
+            <Button onClick={createOffer}>Start the call</Button>
           ) : (
-            <p>Joined</p>
+            <Button onClick={answerCall} disabled={!id}>
+              Join the call
+            </Button>
           )}
         </>
       )}

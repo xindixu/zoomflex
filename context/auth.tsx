@@ -11,16 +11,17 @@ type TUser = {
 
 type TAuthContext = {
   currentUser?: TUser
+  loaded?: boolean
   setCurrentUser: (user: any) => void
 }
 
 const AuthContext = React.createContext<TAuthContext>({
-  currentUser: {},
   setCurrentUser: () => {},
 })
 
 export const AuthContextProvider = ({ children }) => {
   const [currentUser, setCurrentUser] = useState<TUser>()
+  const [loaded, setLoaded] = useState(false)
   const router = useRouter()
 
   useEffect(() => {
@@ -66,11 +67,13 @@ export const AuthContextProvider = ({ children }) => {
     } catch (e) {
       console.error(e)
     }
+    setLoaded(true)
   }, [])
 
   return (
     <AuthContext.Provider
       value={{
+        loaded,
         currentUser,
         setCurrentUser: (res) => {
           setCurrentUser(res)
