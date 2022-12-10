@@ -1,6 +1,7 @@
 import { Divider, Typography } from "antd"
 import type { NextPage } from "next"
 import { useRouter } from "next/router"
+import withProtectedRoute from "../components/protected-routes"
 
 import RoomForm from "../components/room/form"
 
@@ -32,4 +33,4 @@ const Rooms: NextPage = () => {
   )
 }
 
-export default Rooms
+export default withProtectedRoute(Rooms)
