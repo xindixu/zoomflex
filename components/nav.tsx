@@ -5,9 +5,9 @@ import AuthContext from "../context/auth"
 
 const ROUTES = {
   home: "/",
-  meetings: "/meetings",
+  meetings: "/meetings/new",
   rooms: "/rooms",
-  videos:"/videos",
+  videos: "/videos",
   signIn: "/sign-in",
   signOut: "/sign-out",
 }
