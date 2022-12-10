@@ -1,6 +1,6 @@
-import React, { useContext } from "react"
+import React, { useContext, useEffect, useState } from "react"
 import { useRouter } from "next/router"
-import { Menu } from "antd"
+import { Button, Menu } from "antd"
 import AuthContext from "../context/auth"
 
 const ROUTES = {
@@ -21,23 +21,52 @@ const DEFAULT_ITEMS = [
 
 const Nav = () => {
   const router = useRouter()
-  const { currentUser } = useContext(AuthContext)
-  const sessionITem = currentUser?.username
-    ? {
-        key: "subMenu",
-        label: currentUser?.username,
-        children: [{ key: "signOut", label: "Sign Out" }],
-      }
-    : { key: "signIn", label: "Sign In" }
+  const { currentUser, loaded } = useContext(AuthContext)
+
+  const [sessionItem, setSessionItem] = useState({
+    key: "signIn",
+    label: "Sign In",
+  })
+
+  useEffect(() => {
+    if (loaded && currentUser?.username) {
+      setSessionItem({ key: "signOut", label: currentUser?.username })
+    }
+  }, [currentUser, loaded])
 
   return (
     <>
       <Menu
         theme="dark"
         mode="horizontal"
-        onClick={({ key }) => router.push(ROUTES[key])}
-        items={[...DEFAULT_ITEMS, sessionITem]}
+        onClick={({ key }) => {
+          if (ROUTES[key]) {
+            router.push(ROUTES[key], ROUTES[key])
+          }
+        }}
+        items={DEFAULT_ITEMS}
       />
+      <Button
+        onClick={() => router.push(ROUTES[sessionItem.key])}
+        style={{
+          position: "absolute",
+          top: 16,
+          right: 16,
+        }}
+      >
+        {sessionItem.label}
+      </Button>
+
+      <Button
+        onClick={() => router.push("/meeting?roomId=10")}
+        style={{
+          position: "absolute",
+          top: 16,
+          right: 200,
+        }}
+      >
+        Current meeting
+      </Button>
     </>
   )
 }

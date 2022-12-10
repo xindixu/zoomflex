@@ -1,12 +1,12 @@
 import type { NextPage } from "next"
 import { useRouter } from "next/router"
 import { useEffect, useState } from "react"
-import { VideoForm } from "../lib/videoform"
+// import { VideoForm } from "../lib/videoform"
 
 const Videos: NextPage = () => {
   const router = useRouter()
   const API_KEY = `5075aeb0c224063fdb615c496b26ba4a`
-  return null
+  return <div>video page</div>
   //   const VideosList = ({item, deleteVideoProp}) =>{
 
   //     const deleteVideo = _ => {deleteVideoProp(item)}

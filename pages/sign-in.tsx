@@ -24,7 +24,9 @@ function SignIn() {
   }, [])
 
   const onSuccess = async (res) => {
-    localStorage.setItem("user", JSON.stringify(res))
+    if (localStorage) {
+      localStorage.setItem("user", JSON.stringify(res))
+    }
     setCurrentUser(res)
     router.push(
       {

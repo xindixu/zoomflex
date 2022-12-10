@@ -55,19 +55,21 @@ export const AuthContextProvider = ({ children }) => {
         },
       })
     } catch (error) {
-      console.error(error)
+      console.error("Failed to init google auth", error)
     }
   }, [])
 
   useEffect(() => {
     try {
-      const user = JSON.parse(localStorage.getItem("user") || "") || {}
-      if (user) {
-        setCurrentUser({
-          username: user.username,
-          email: user.email,
-          id: user.id,
-        })
+      if (localStorage) {
+        const user = JSON.parse(localStorage.getItem("user") || "") || {}
+        if (user) {
+          setCurrentUser({
+            username: user.username,
+            email: user.email,
+            id: user.id,
+          })
+        }
       }
     } catch (e) {
       console.error("Failed to parse user from local storage", e)

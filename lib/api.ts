@@ -54,7 +54,9 @@ export function addParticipants({ roomId, participants }) {
       url: `/user/users/${id}`,
     })
 
-  return Promise.all(participants.map(addUserToRoom)).then((resp) => {
+  if (!participants || participants.length === 0) return Promise.resolve()
+
+  return Promise.all(participants?.map(addUserToRoom)).then((resp) => {
     console.log(resp)
   })
 }

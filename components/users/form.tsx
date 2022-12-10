@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react"
-import { Form, Input, Button, Space, Select } from "antd"
-import { MinusCircleOutlined, PlusOutlined } from "@ant-design/icons"
+import { Form, Button, Select } from "antd"
+
 import { listUsers } from "../../lib/api"
 import { TUser } from "../../types/user"
 
@@ -22,10 +22,15 @@ const UserForm = ({ initialValues, onSubmit }: TProps) => {
   const onFinishFailed = (errorInfo) => {
     console.error("Failed:", errorInfo)
   }
+
   useEffect(() => {
-    listUsers().then((data) =>
-      setUsers(data.map((d) => ({ value: d.id, label: d.username })))
-    )
+    try {
+      listUsers().then((data) =>
+        setUsers(data?.map((d) => ({ value: d.id, label: d.username })))
+      )
+    } catch (e) {
+      console.error(e)
+    }
   }, [])
 
   useEffect(() => form.resetFields(), [form, initialValues])

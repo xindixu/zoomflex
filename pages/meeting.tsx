@@ -21,8 +21,6 @@ const Meeting = () => {
 
   useEffect(() => {
     if (roomId) {
-      getVideoUrlByRoomId(roomId).then(setUrl)
-
       const start = async () => {
         const room = await getRoom(roomId)
         const videoId = room.video_id
@@ -31,11 +29,14 @@ const Meeting = () => {
         const video = await getVideo(videoId)
         setUrl(video.video_url)
       }
-      start()
+      try {
+        start()
+      } catch (error) {
+        console.error(error)
+      }
     }
   }, [roomId])
 
-  console.log(currentUser?.email, currentUser?.username)
   return (
     <div>
       {roomId && hostId && (
@@ -50,13 +51,11 @@ const CurrentMeetingsPage = () => {
   const router = useRouter()
   const { query } = router
 
-  if (!query.roomId) {
+  if (!query?.roomId) {
     return (
-      <div>
-        <NextLink href="/meetings/new" passHref>
-          <Button>Create a new meeting</Button>
-        </NextLink>
-      </div>
+      <NextLink href="/new-meeting" passHref>
+        <Button>Create a new meeting</Button>
+      </NextLink>
     )
   }
 

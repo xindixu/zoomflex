@@ -23,7 +23,8 @@ function SignOut() {
 
   useEffect(() => {
     signOut().then(async () => {
-      setCurrentUser(null)
+      setCurrentUser({})
+
       localStorage.removeItem("user")
 
       router.push(
