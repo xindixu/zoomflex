@@ -44,11 +44,7 @@ const Meetings = () => {
         console.log(values)
         addParticipants({ ...values, roomId }).then(() => {
           console.log("done!")
-          router.push("/meeting", {
-            query: {
-              roomId: roomId,
-            },
-          })
+          router.push(`/meeting?roomId=${roomId}`)
         })
       }}
     />,
