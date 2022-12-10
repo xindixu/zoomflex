@@ -15,20 +15,12 @@ type TAuthContext = {
 }
 
 const AuthContext = React.createContext<TAuthContext>({
-  currentUser: {
-    id: 1,
-    username: "xindi",
-    email: "xindixu@gmail.com",
-  },
+  currentUser: {},
   setCurrentUser: () => {},
 })
 
 export const AuthContextProvider = ({ children }) => {
-  const [currentUser, setCurrentUser] = useState<TUser>({
-    id: 1,
-    username: "xindi",
-    email: "xindixu@gmail.com",
-  })
+  const [currentUser, setCurrentUser] = useState<TUser>()
   const router = useRouter()
 
   useEffect(() => {
@@ -61,6 +53,19 @@ export const AuthContextProvider = ({ children }) => {
       },
     })
     // google.accounts.id.prompt()
+  }, [])
+
+  useEffect(() => {
+    try {
+      const user = JSON.parse(localStorage.getItem("user") || "") || {}
+      setCurrentUser({
+        username: user.username,
+        email: user.email,
+        id: user.id,
+      })
+    } catch (e) {
+      console.error(e)
+    }
   }, [])
 
   return (

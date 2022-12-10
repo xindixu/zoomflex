@@ -26,6 +26,7 @@ function SignIn() {
 
   const onSuccess = async (res) => {
     setCurrentUser(res)
+    localStorage.setItem("user", JSON.stringify(res))
     router.push(
       {
         pathname: "/",

@@ -1,6 +1,6 @@
 import React, { useEffect, useContext } from "react"
 import { useRouter } from "next/router"
-import { signOut, getCurrentUser } from "../lib/auth"
+import { signOut } from "../lib/auth"
 import AuthContext from "../context/auth"
 
 function SignOut() {
@@ -23,7 +23,8 @@ function SignOut() {
 
   useEffect(() => {
     signOut().then(async () => {
-      await getCurrentUser().then(setCurrentUser)
+      setCurrentUser(null)
+      localStorage.removeItem("user")
 
       router.push(
         {
