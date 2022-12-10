@@ -4,28 +4,29 @@ import "video.js/dist/video-js.css"
 import "videojs-youtube/dist/Youtube.min.js"
 
 type Props = {
-  options?: {
-    autoplay: boolean
-    sources: { src: string; type: string }[]
-  }
+  url: string
 }
 
 const DEFAULT_OPTIONS = {
-  autoplay: true,
+  autoplay: false,
   controls: true,
   responsive: true,
   fluid: true,
-  sources: [
-    {
-      type: "video/youtube",
-      src: "https://youtu.be/Njt1io9jakQ",
-    },
-  ],
 }
 
-const Video = ({ options = DEFAULT_OPTIONS }: Props) => {
+const Video = ({ url }: Props) => {
   const videoRef = React.useRef<HTMLDivElement>(null)
   const playerRef = React.useRef<any>(null)
+
+  const options = {
+    ...DEFAULT_OPTIONS,
+    sources: [
+      {
+        type: "video/youtube",
+        src: url,
+      },
+    ],
+  }
 
   useEffect(() => {
     // Make sure Video.js player is only initialized once
