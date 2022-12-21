@@ -44,6 +44,19 @@ export async function getVideoUrlByRoomId(roomId) {
   return video.video_url
 }
 
+export function sendInvites({ roomId, participants }) {
+  const sendInvite = (id) =>
+    apiFetch({
+      method: "get",
+      url: `/room-user/invite/${id}/${roomId}`,
+    })
+
+  if (!participants || participants.length === 0) return Promise.resolve()
+  return Promise.all(participants?.map(sendInvite)).then((resp) => {
+    console.log(resp)
+  })
+}
+
 export function addParticipants({ roomId, participants }) {
   const addUserToRoom = (id) =>
     apiFetch({

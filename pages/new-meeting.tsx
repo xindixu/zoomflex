@@ -7,7 +7,12 @@ import withProtectedRoute from "../components/protected-routes"
 import VideoForm from "../components/video/form"
 import RoomForm from "../components/room/form"
 import UserForm from "../components/users/form"
-import { createVideo, createRoom, addParticipants } from "../lib/api"
+import {
+  createVideo,
+  createRoom,
+  addParticipants,
+  sendInvites,
+} from "../lib/api"
 
 const { Title } = Typography
 
@@ -44,6 +49,7 @@ const Meetings = () => {
         console.log(values)
         addParticipants({ ...values, roomId }).then(() => {
           console.log("done!")
+          sendInvites({ ...values, roomId })
           router.push(`/meeting?roomId=${roomId}`)
         })
       }}
