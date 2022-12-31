@@ -6,7 +6,7 @@ import { useRouter } from "next/router"
 import withProtectedRoute from "../components/protected-routes"
 import VideoForm from "../components/video/form"
 import RoomForm from "../components/room/form"
-import UserForm from "../components/users/form"
+import UserForm from "../components/user/form"
 import {
   createVideo,
   createRoom,
